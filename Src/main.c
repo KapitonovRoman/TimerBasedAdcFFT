@@ -49,7 +49,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -79,7 +78,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  pingBufferReady = 0;
+  pongBufferReady = 0;
+  for(uint16_t i = 0; i < ADC_BUF_LENGHT; i ++) {
+    adcBuffer[i] = 0;
+  }
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -96,8 +99,10 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuffer, ADC_BUF_LENGHT);
   HAL_TIM_Base_Start_IT(&htim3);
 
+  // Initialize TFT screen
   ST7735_Init();
   ST7735_SetRotation(1);
   ST7735_FillScreen(ST7735_BLACK);
@@ -109,7 +114,21 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
+    if (pingBufferReady) {
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+
+      pingBufferReady = 0;
+    }
+    else if (pongBufferReady) {
+      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+
+      pongBufferReady = 0;
+    }
+    else {
+      continue;
+    }
   }
   /* USER CODE END 3 */
 }

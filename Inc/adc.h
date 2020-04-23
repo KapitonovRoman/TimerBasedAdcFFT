@@ -33,7 +33,11 @@
 extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
+#define ADC_BUF_LENGHT 256
 
+extern volatile uint16_t adcBuffer[ADC_BUF_LENGHT];
+extern volatile uint8_t pingBufferReady;
+extern volatile uint8_t pongBufferReady;
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
