@@ -30,7 +30,3 @@ timebasedadc\tim.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 timebasedadc\tim.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 timebasedadc\tim.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 timebasedadc\tim.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
-timebasedadc\tim.o: ../Drivers/ST7735/Inc/ST7735.h
-timebasedadc\tim.o: ../Drivers/ST7735/Inc/fonts.h
-timebasedadc\tim.o: ../Drivers/ST7735/Inc/ST7735_config.h
-timebasedadc\tim.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

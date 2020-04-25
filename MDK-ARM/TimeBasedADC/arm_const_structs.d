@@ -1,0 +1,11 @@
+timebasedadc\arm_const_structs.o: ..\Drivers\CMSIS\DSP\Source\CommonTables\arm_const_structs.c
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/DSP/Include/arm_const_structs.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/Include/core_cm3.h
+timebasedadc\arm_const_structs.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/Include/cmsis_version.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+timebasedadc\arm_const_structs.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\arm_const_structs.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\arm_const_structs.o: ../Drivers/CMSIS/DSP/Include/arm_common_tables.h

@@ -1,0 +1,13 @@
+timebasedadc\commontables.o: C:\Users\void\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Source\CommonTables\CommonTables.c
+timebasedadc\commontables.o: C:\Users\void\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Source\CommonTables\arm_common_tables.c
+timebasedadc\commontables.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\commontables.o: ../Drivers/CMSIS/Include/core_cm3.h
+timebasedadc\commontables.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+timebasedadc\commontables.o: ../Drivers/CMSIS/Include/cmsis_version.h
+timebasedadc\commontables.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+timebasedadc\commontables.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+timebasedadc\commontables.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\commontables.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\commontables.o: ../Drivers/CMSIS/DSP/Include/arm_common_tables.h
+timebasedadc\commontables.o: C:\Users\void\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Source\CommonTables\arm_const_structs.c
+timebasedadc\commontables.o: ../Drivers/CMSIS/DSP/Include/arm_const_structs.h

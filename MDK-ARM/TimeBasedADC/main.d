@@ -34,7 +34,13 @@ timebasedadc\main.o: ../Inc/dma.h
 timebasedadc\main.o: ../Inc/spi.h
 timebasedadc\main.o: ../Inc/tim.h
 timebasedadc\main.o: ../Inc/gpio.h
+timebasedadc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 timebasedadc\main.o: ../Drivers/ST7735/Inc/ST7735_config.h
 timebasedadc\main.o: ../Drivers/ST7735/Inc/ST7735.h
 timebasedadc\main.o: ../Drivers/ST7735/Inc/fonts.h
 timebasedadc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+timebasedadc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timebasedadc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\main.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\main.o: ../Drivers/CMSIS/Include/core_cm3.h

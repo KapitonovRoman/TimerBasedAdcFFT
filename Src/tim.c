@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-#include "ST7735.h"
+
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim3;
@@ -96,8 +96,9 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 } 
 
 /* USER CODE BEGIN 1 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
 }
 /* USER CODE END 1 */
 

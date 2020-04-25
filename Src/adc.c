@@ -21,9 +21,9 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-volatile uint16_t adcBuffer[ADC_BUF_LENGHT];
-volatile uint8_t pingBufferReady;
-volatile uint8_t pongBufferReady;
+uint16_t adcBuffer[FFT_Length];
+uint16_t adcFilledCount = 0;
+uint8_t  adcBufferReady = 0;
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -38,7 +38,7 @@ void MX_ADC1_Init(void)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T3_TRGO;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
@@ -51,7 +51,7 @@ void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_13CYCLES_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -88,7 +88,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    hdma_adc1.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_adc1.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
     {
       Error_Handler();
@@ -134,13 +134,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-  // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
-  pingBufferReady = 1; // Set ping buffer ready flag to process in main loop.
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-  // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
-  pongBufferReady = 1; // Set pong buffer ready flag to process in main loop.
 }
 /* USER CODE END 1 */
 

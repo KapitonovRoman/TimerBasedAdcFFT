@@ -28,8 +28,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "ST7735_config.h"
 #include "ST7735.h"
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <arm_math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,6 +44,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define FFT_INVERSE_FLAG        ((uint8_t)0)
+#define FFT_Normal_OUTPUT_FLAG  ((uint8_t)1)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,6 +56,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+// uint16_t uhADCxConvertedValue;
+// 
+//uint16_t index_input_buffer = 0;
+q15_t FFT_Input_q15[FFT_Length];
+q15_t FFT_Output_q15[FFT_Length * 2];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +81,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+//  char adcValue[5];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -78,11 +90,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  pingBufferReady = 0;
-  pongBufferReady = 0;
-  for(uint16_t i = 0; i < ADC_BUF_LENGHT; i ++) {
-    adcBuffer[i] = 0;
-  }
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -99,7 +107,7 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuffer, ADC_BUF_LENGHT);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuffer, FFT_Length);
   HAL_TIM_Base_Start_IT(&htim3);
 
   // Initialize TFT screen
@@ -116,20 +124,50 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if (pingBufferReady) {
-      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+    arm_rfft_instance_q15 FFT_struct;
 
-      pingBufferReady = 0;
-    }
-    else if (pongBufferReady) {
-      HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_3);
+    q15_t maxValue = 0;
+    uint32_t maxIndex = 0;
+    char maxIndexStr[4];
 
-      pongBufferReady = 0;
+    for(uint16_t i = 0; i < FFT_Length; i++){
+      FFT_Input_q15[(uint16_t) i] = (q15_t) (adcBuffer[i] << 3);
     }
-    else {
-      continue;
+    
+    // Initialise CFFT MOdule, set intFlag = 0, and doBitReverse = 1 
+    // Watch Eli Hughes ARM CMSIS DSP video for explanation
+    arm_rfft_init_q15(&FFT_struct, FFT_Length, FFT_INVERSE_FLAG, FFT_Normal_OUTPUT_FLAG);
+    
+    // Then process data through the CFFT/CIFFT Module
+    arm_rfft_q15(&FFT_struct, FFT_Input_q15, FFT_Output_q15);
+
+    /* Process the data through the Complex Magniture Module for calculating the magnitude at each bin */
+    arm_abs_q15(FFT_Input_q15, FFT_Output_q15, FFT_Length);
+
+    // Remove DC Offset
+    FFT_Output_q15[0] = 0;
+    FFT_Output_q15[1] = 0;
+    
+    // Calculate Max value and return the value:
+    arm_max_q15(FFT_Output_q15, FFT_Length / 2, &maxValue, &maxIndex);
+  
+    ST7735_FillScreen(ST7735_BLACK);
+    for(uint16_t i = 0; i < FFT_Length / 2; i++){
+      ST7735_DrawFastHLine(0, i, (uint16_t) (FFT_Output_q15[i] >> 1), ST7735_WHITE);
     }
+    sprintf(maxIndexStr, "%4d", maxIndex);
+    ST7735_DrawString(100, 100, maxIndexStr, Font_7x10, ST7735_RED, ST7735_BLACK);
   }
+    // HAL_TIM_Base_Start(&htim3);		// Call Delay
+    // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+    // weighedValue = uhADCxConvertedValue - 2048;
+    // weighedValue = uhADCxConvertedValue;
+    // sign = (weighedValue > 0) - (weighedValue < 0);
+    // shiftedWeighedValue = weighedValue << 3;
+    // shiftedWeighedValue = (shiftedWeighedValue & (~(1 << 15))) | (sign << 15);
+    // FFT_Input_q15[(uint16_t) index_input_buffer] = (q15_t) (shiftedWeighedValue);
+
+  // }
   /* USER CODE END 3 */
 }
 

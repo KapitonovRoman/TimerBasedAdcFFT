@@ -27,6 +27,7 @@
 "timebasedadc\stm32f1xx_hal_tim.o"
 "timebasedadc\stm32f1xx_hal_tim_ex.o"
 "timebasedadc\system_stm32f1xx.o"
+"..\..\..\..\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib"
 --library_type=microlib --strict --scatter "TimeBasedADC\TimeBasedADC.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
