@@ -21,6 +21,10 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
+#include "ST7735.h"
+
+uint16_t currentAdcSampleNum = 0;
+uint16_t adcSample = 0;
 uint16_t adcBuffer[FFT_Length];
 uint16_t adcFilledCount = 0;
 uint8_t  adcBufferReady = 0;
@@ -88,7 +92,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
     hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    hdma_adc1.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+    hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
     {
       Error_Handler();
@@ -137,6 +141,13 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+  adcBuffer[currentAdcSampleNum] = adcSample;
+  currentAdcSampleNum++;
+  if(currentAdcSampleNum == FFT_Length) {
+    adcBufferReady = 1;
+    currentAdcSampleNum = 0;
+  }
+  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
 }
 /* USER CODE END 1 */
 

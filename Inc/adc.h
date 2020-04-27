@@ -27,16 +27,33 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
-#define FFT_Length 256
+#define FFT_256
+// #define FFT_APPLY_WINDOW
+#define WindowCoefficients GaussWindow
+
+#if defined(FFT_64)
+  #define FFT_Length 64
+#elif defined(FFT_128)
+  #define FFT_Length 128
+#elif defined(FFT_256)
+  #define FFT_Length 256
+#elif defined(FFT_512)
+  #define FFT_Length 512
+#elif defined(FFT_1024)
+  #define FFT_Length 1024
+#endif
+
+
+extern uint16_t adcSample;
 extern uint16_t adcBuffer[FFT_Length];
 extern uint16_t adcFilledCount;
 extern uint8_t adcBufferReady;
+
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);

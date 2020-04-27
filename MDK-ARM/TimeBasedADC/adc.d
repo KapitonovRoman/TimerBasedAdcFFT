@@ -30,3 +30,13 @@ timebasedadc\adc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 timebasedadc\adc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 timebasedadc\adc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 timebasedadc\adc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+timebasedadc\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+timebasedadc\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timebasedadc\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\adc.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\adc.o: ../Drivers/CMSIS/Include/core_cm3.h
+timebasedadc\adc.o: ../Drivers/ST7735/Inc/ST7735.h
+timebasedadc\adc.o: ../Drivers/ST7735/Inc/fonts.h
+timebasedadc\adc.o: ../Drivers/ST7735/Inc/ST7735_config.h
+timebasedadc\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

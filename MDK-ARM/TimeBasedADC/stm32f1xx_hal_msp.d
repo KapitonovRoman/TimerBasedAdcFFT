@@ -29,3 +29,9 @@ timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_
 timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+timebasedadc\stm32f1xx_hal_msp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+timebasedadc\stm32f1xx_hal_msp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timebasedadc\stm32f1xx_hal_msp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\stm32f1xx_hal_msp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\stm32f1xx_hal_msp.o: ../Drivers/CMSIS/Include/core_cm3.h

@@ -1,5 +1,7 @@
 --cpu Cortex-M3
 "timebasedadc\startup_stm32f103xb.o"
+"timebasedadc\hann_window.o"
+"timebasedadc\gauss_window.o"
 "timebasedadc\main.o"
 "timebasedadc\gpio.o"
 "timebasedadc\adc.o"

@@ -30,3 +30,9 @@ timebasedadc\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 timebasedadc\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 timebasedadc\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 timebasedadc\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+timebasedadc\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+timebasedadc\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timebasedadc\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\gpio.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\gpio.o: ../Drivers/CMSIS/Include/core_cm3.h

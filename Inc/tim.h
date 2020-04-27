@@ -33,7 +33,8 @@
 extern TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN Private defines */
-
+extern uint16_t ADCSamplesTaken;
+extern uint16_t ADCBatchReady;
 /* USER CODE END Private defines */
 
 void MX_TIM3_Init(void);

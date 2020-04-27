@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB, ARM_MATH_CM3, USE_SPI_DMA</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;           ../Drivers/STM32F1xx_HAL_Driver/Inc;           ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;           ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;           ../Drivers/CMSIS/Include;           ../Drivers/ST7735/Inc;           ../Drivers/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../Inc;                                    ../Drivers/STM32F1xx_HAL_Driver/Inc;                                    ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;                                    ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;                                    ../Drivers/CMSIS/Include;                                    ../Drivers/ST7735/Inc;                                    ../Drivers/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,6 +392,16 @@
         <Group>
           <GroupName>Application/User</GroupName>
           <Files>
+            <File>
+              <FileName>hann_window.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\hann_window.c</FilePath>
+            </File>
+            <File>
+              <FileName>gauss_window.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\gauss_window.c</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>

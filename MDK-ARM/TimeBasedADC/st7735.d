@@ -32,5 +32,10 @@ timebasedadc\st7735.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 timebasedadc\st7735.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 timebasedadc\st7735.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 timebasedadc\st7735.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
-timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+timebasedadc\st7735.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+timebasedadc\st7735.o: ../Drivers/CMSIS/Include/core_cm3.h
+timebasedadc\st7735.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

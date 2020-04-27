@@ -28,13 +28,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
 #include "ST7735_config.h"
 #include "ST7735.h"
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <arm_math.h>
+#include "hann_window.h"
+#include "gauss_window.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -82,6 +79,10 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 //  char adcValue[5];
+  arm_rfft_instance_q15 FFT_struct;
+
+  q15_t maxValue = 0;
+  uint32_t maxIndex = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -107,7 +108,9 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuffer, FFT_Length);
+  while(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK);
+
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcSample, 1);
   HAL_TIM_Base_Start_IT(&htim3);
 
   // Initialize TFT screen
@@ -124,50 +127,42 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    arm_rfft_instance_q15 FFT_struct;
+    char value[4];
+    sprintf(value, "%d", adcBuffer[0]);
+    ST7735_DrawString(0, 0, value, Font_7x10, ST7735_RED, ST7735_BLACK);
 
-    q15_t maxValue = 0;
-    uint32_t maxIndex = 0;
-    char maxIndexStr[4];
+    if(adcBufferReady) {
+       for(uint16_t i = 0; i < FFT_Length; i++){
+          FFT_Input_q15[(uint16_t) i] = (q15_t) (adcBuffer[i] << 3);
+        }
 
-    for(uint16_t i = 0; i < FFT_Length; i++){
-      FFT_Input_q15[(uint16_t) i] = (q15_t) (adcBuffer[i] << 3);
-    }
-    
-    // Initialise CFFT MOdule, set intFlag = 0, and doBitReverse = 1 
-    // Watch Eli Hughes ARM CMSIS DSP video for explanation
-    arm_rfft_init_q15(&FFT_struct, FFT_Length, FFT_INVERSE_FLAG, FFT_Normal_OUTPUT_FLAG);
-    
-    // Then process data through the CFFT/CIFFT Module
-    arm_rfft_q15(&FFT_struct, FFT_Input_q15, FFT_Output_q15);
-
-    /* Process the data through the Complex Magniture Module for calculating the magnitude at each bin */
-    arm_abs_q15(FFT_Input_q15, FFT_Output_q15, FFT_Length);
-
-    // Remove DC Offset
-    FFT_Output_q15[0] = 0;
-    FFT_Output_q15[1] = 0;
-    
-    // Calculate Max value and return the value:
-    arm_max_q15(FFT_Output_q15, FFT_Length / 2, &maxValue, &maxIndex);
-  
-    ST7735_FillScreen(ST7735_BLACK);
-    for(uint16_t i = 0; i < FFT_Length / 2; i++){
-      ST7735_DrawFastHLine(0, i, (uint16_t) (FFT_Output_q15[i] >> 1), ST7735_WHITE);
-    }
-    sprintf(maxIndexStr, "%4d", maxIndex);
-    ST7735_DrawString(100, 100, maxIndexStr, Font_7x10, ST7735_RED, ST7735_BLACK);
-  }
-    // HAL_TIM_Base_Start(&htim3);		// Call Delay
-    // HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
-    // weighedValue = uhADCxConvertedValue - 2048;
-    // weighedValue = uhADCxConvertedValue;
-    // sign = (weighedValue > 0) - (weighedValue < 0);
-    // shiftedWeighedValue = weighedValue << 3;
-    // shiftedWeighedValue = (shiftedWeighedValue & (~(1 << 15))) | (sign << 15);
-    // FFT_Input_q15[(uint16_t) index_input_buffer] = (q15_t) (shiftedWeighedValue);
-
-  // }
+ #if defined(FFT_APPLY_WINDOW)
+        // Apply a window to the input
+        arm_mult_q15(FFT_Input_q15, WindowCoefficients, FFT_Input_q15, FFT_Length);
+ #endif
+     
+        // Initialize FFT struct
+        arm_rfft_init_q15(&FFT_struct, FFT_Length, FFT_INVERSE_FLAG, FFT_Normal_OUTPUT_FLAG);
+        // Perform real FFT
+        arm_rfft_q15(&FFT_struct, FFT_Input_q15, FFT_Output_q15);
+        // Calculate magnitude in each bin
+        arm_abs_q15(FFT_Input_q15, FFT_Output_q15, FFT_Length);
+       
+        // Remove DC Offset
+        FFT_Output_q15[0] = 0;
+        FFT_Output_q15[1] = 0;
+        
+        // Calculate Max value and return the value:
+        arm_max_q15(FFT_Output_q15, FFT_Length / 2, &maxValue, &maxIndex);
+      
+        ST7735_FillScreen(ST7735_BLACK);
+        for(uint16_t i = 0; i < FFT_Length / 2; i++){
+          ST7735_DrawFastHLine(0, i, (uint16_t) (FFT_Output_q15[i] >> 1), ST7735_WHITE);
+          // ST7735_DrawFastVLine(i, 0, (uint16_t) (FFT_Output_q15[i] >> 1), ST7735_WHITE);
+        }
+        adcBufferReady = 0;
+      }
+   }
   /* USER CODE END 3 */
 }
 
@@ -227,7 +222,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
   /* USER CODE END Error_Handler_Debug */
 }
 
